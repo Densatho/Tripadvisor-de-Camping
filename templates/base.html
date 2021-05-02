@@ -36,20 +36,9 @@
                 </div>
             </div>
         </nav>
-        <!-- Page Content-->
-        <div class="container">
-            <!-- Jumbotron Header-->
-            <header class="jumbotron my-4">
-                <img src="{{ url_for('static', filename='assets/camping-tent-night.jpg') }}" class="img-fluid"/>
-                <h1 class="display-3">Bem vindos ao Camping Tripadvisor!</h1>
-                <p class="lead">Um site aonde poderá encontrar os melhores locais de camping do Brasil.</p>
-                <a class="btn btn-primary btn-lg" href="#!">Call to action!</a>
-            </header>
-
-            {% block content %}
-
-            {% endblock %}
-        </div>
+        
+        {% block content %}
+        {% endblock %}
 
         <!-- Footer-->
         <footer class="py-5 bg-dark">
