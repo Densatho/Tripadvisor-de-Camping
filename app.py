@@ -1,49 +1,72 @@
 from flask import Flask, render_template
+from config import app_config, app_active
+from flask_sqlalchemy import SQLAlchemy
 
-app = Flask(__name__)
+# A variável config recebe a atribuição do ambiente ativo.
+print(app_config)
+print(app_active)
+config = app_config[app_active]
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+# Método create_app que recebe como argumento com todas as configurações da aplicação.
+def create_app(config_name):
 
+    # A variável app recebe uma instância de Flask, passando a configuração da localização dos templates. Pode 
+    # receber diversas configurações.
+    app = Flask(__name__, template_folder='templates')
 
-@app.route('/search')
-def search():
-    return render_template('search.html')
+    # O atributo secret_key da aplicação app, recebe a configuração da chave secreta do arquivo config.py, por meio da variável config e atributo SECRET.
+    app.secret_key = config.SECRET 
 
+    # Efetua o carregamento do arquivo config.py
+    app.config.from_object(app_config[config_name]) 
+    app.config.from_pyfile('config.py')
+    app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLALCHEMY_DATABASE_URI
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False 
+    db = SQLAlchemy(config.APP) 
+    db.init_app(app)
 
-@app.route('/401')
-def erro401():
-    return render_template('401.html')
-
-
-@app.route('/404')
-def erro404():
-    return render_template('404.html')
-
-
-@app.route('/500')
-def erro500():
-    return render_template('500.html')
-
-
-@app.route('/admin')
-def admin():
-    return render_template('admin.html')
-
-@app.route('/admin/charts')
-def admin_charts():
-    return render_template('charts.html')
+    @app.route('/')
+    def index():
+        return render_template('index.html')
 
 
-@app.route('/login')
-def admin_login():
-    return render_template('login.html')
+    @app.route('/search')
+    def search():
+        return render_template('search.html')
 
 
-@app.route('/password')
-def admin_password():
-    return render_template('password.html')
+    @app.route('/401')
+    def erro401():
+        return render_template('401.html')
+
+
+    @app.route('/404')
+    def erro404():
+        return render_template('404.html')
+
+
+    @app.route('/500')
+    def erro500():
+        return render_template('500.html')
+
+
+    @app.route('/admin')
+    def admin():
+        return render_template('admin.html')
+
+    @app.route('/admin/charts')
+    def admin_charts():
+        return render_template('charts.html')
+
+
+    @app.route('/login')
+    def admin_login():
+        return render_template('login.html')
+
+
+    @app.route('/password')
+    def admin_password():
+        return render_template('password.html')
 
 
 if __name__ == '__main__':
