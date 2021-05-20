@@ -11,5 +11,5 @@ class Announce(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     local = db.Column(db.Integer, db.ForeignKey(Local.id), nullable=False)
-    cost = db.Column(db.Float, nullable=False)
+    price = db.Column(db.Float, nullable=False)
     description = db.Column(db.String(240), nullable=False)
