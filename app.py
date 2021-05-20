@@ -1,10 +1,9 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from config import app_config, app_active
 from flask_sqlalchemy import SQLAlchemy
 
+
 # A variável config recebe a atribuição do ambiente ativo.
-print(app_config)
-print(app_active)
 config = app_config[app_active]
 
 # Método create_app que recebe como argumento com todas as configurações da aplicação.
@@ -30,43 +29,45 @@ def create_app(config_name):
         return render_template('index.html')
 
 
-    @app.route('/search')
+    @app.route('/search/')
     def search():
         return render_template('search.html')
 
 
-    @app.route('/401')
+    @app.route('/401/')
     def erro401():
         return render_template('401.html')
 
 
-    @app.route('/404')
+    @app.route('/404/')
     def erro404():
         return render_template('404.html')
 
 
-    @app.route('/500')
+    @app.route('/500/')
     def erro500():
         return render_template('500.html')
 
 
-    @app.route('/admin')
+    @app.route('/admin/')
     def admin():
         return render_template('admin.html')
 
-    @app.route('/admin/charts')
+    @app.route('/admin/charts/')
     def admin_charts():
         return render_template('charts.html')
 
 
-    @app.route('/login')
+    @app.route('/login/')
     def admin_login():
         return render_template('login.html')
 
 
-    @app.route('/password')
+    @app.route('/password/')
     def admin_password():
         return render_template('password.html')
+    
+    return app
 
 
 if __name__ == '__main__':
