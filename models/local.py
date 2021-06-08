@@ -14,3 +14,6 @@ class Local(db.Model):
     phone = db.Column(db.String(15), nullable=False)
     rating_amount = db.Column(db.Integer, nullable=False)
     rating = db.Column(db.Integer, nullable=False)
+    
+    def __repr__(self) -> str:
+        return f'{self.name} - {self.address}'

@@ -13,3 +13,6 @@ class Announce(db.Model):
     local = db.Column(db.Integer, db.ForeignKey(Local.id), nullable=False)
     price = db.Column(db.Float, nullable=False)
     description = db.Column(db.String(240), nullable=False)
+    
+    def __repr__(self) -> str:
+        return f'{self.local} - {self.price} - {self.description}'

@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from config import app_config, app_active
 from flask_sqlalchemy import SQLAlchemy
-
+from admin.admin import start_views
+from controllers.usuario import UsuarioController
 
 # A variável config recebe a atribuição do ambiente ativo.
 config = app_config[app_active]
@@ -21,8 +22,10 @@ def create_app(config_name):
     app.config.from_pyfile('config.py')
     app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLALCHEMY_DATABASE_URI
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False 
-    db = SQLAlchemy(config.APP) 
+    db = SQLAlchemy(config.APP)
+    start_views(app, db)
     db.init_app(app)
+
 
     @app.route('/')
     def index():
@@ -53,14 +56,28 @@ def create_app(config_name):
     def admin():
         return render_template('admin.html')
 
+
     @app.route('/admin/charts/')
     def admin_charts():
         return render_template('charts.html')
 
 
     @app.route('/login/')
-    def admin_login():
+    def login():
         return render_template('login.html')
+
+
+    @app.route('/login/', methods=['POST'])
+    def login_post():
+        user = UsuarioController()
+        email = request.form['email']
+        password = request.form['password']
+        resultado = user.login(email, password)
+        if resultado:
+            return redirect('/admin')
+        else:
+            data = {'status': 401, 'msg': 'Dados incorretos', 'type': None}
+            return render_template('login.html', data)
 
 
     @app.route('/password/')

@@ -1,12 +1,8 @@
 from flask import Flask
-import flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand 
 from config import app_active, app_config
-from models.local import Local
-from models.usuario import User
-from models.anuncio import Announce
 
 config = app_config[app_active]
 app = Flask(__name__)
@@ -17,5 +13,48 @@ migrate = Migrate(app, db)
 manager = Manager(app) 
 manager.add_command('db', MigrateCommand)
 
+
+class Perfil(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    perfil = db.Column(db.String(40), unique=True, nullable=False)
+
+
+class User(db.Model):
+    
+    __tablename__ = 'user'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(40), unique=True, nullable=False)
+    password = db.Column(db.String(40), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    date_created=db.Column(db.DateTime(6),default=db.func.current_timestamp(),nullable=False)
+    last_update=db.Column(db.DateTime(6),onupdate=db.func.current_timestamp(),nullable=True) 
+    recovery_code=db.Column(db.String(100),nullable=True) 
+    active=db.Column(db.Boolean(),default=1,nullable=False) 
+    relacao=db.Column(db.Integer,db.ForeignKey(Perfil.id),nullable=False)
+
+
+class Local(db.Model):
+    
+    __tablename__ = 'local'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(60), nullable=False)
+    address = db.Column(db.String(120), nullable=False)
+    phone = db.Column(db.String(15), nullable=False)
+    rating_amount = db.Column(db.Integer, nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
+    
+    
+class Announce(db.Model):
+    
+    __tablename__ = 'announce'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    local = db.Column(db.Integer, db.ForeignKey(Local.id), nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    description = db.Column(db.String(240), nullable=False)
+    
+    
 if __name__ == '__main__':
     manager.run()
