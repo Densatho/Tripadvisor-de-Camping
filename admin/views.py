@@ -2,8 +2,23 @@
 # Será utilizado aqui como superclasse da classe UsuarioView (herdará todas as configurações e poderá ser modificada)
 from flask_admin.contrib.sqla import ModelView 
 
+# Adicionado para adequar a Home da aplicação
+# A classe AdminIndexView que será herdada pela classe HomeView para que a 
+# classe HomeView tenha todas as características da página de home 
+# Importando o decorator @expose('/home')para indicar qual rota está sendo modificada.
+# http://localhost:8000/admin/.
+from flask_admin import AdminIndexView, expose
+
 # É importado do arquivo config.py, as variáveis app_config, app_active que app_config: possui as configurações e o tipo de ambiente a ser utilizado (Desenvolvimento, Teste ou Producao). E app_active: possui as configurações de qual ambiente está sendo utilizado por meio da variável de ambiente FLASK_ENV.
 from config import app_config, app_active
+
+# Adicionada a classe HomeView que herda de AdminIndexView todas as caracteírsticas.
+# Substitui a home com o temnplate customizado admin.html (vamos criá-lo)
+class HomeView(AdminIndexView):
+    @expose('/')
+    def index(self):
+        return self.render('admin.html', data={ 'username': 'Admin'})
+
 
 # A variável config recebe a atribuição do ambiente ativo.
 config = app_config[app_active]
