@@ -1,6 +1,7 @@
 # Componente dentro do flask_admin para ativar as views em nossa aplicação, baseadas em nossas models.
 # Será utilizado aqui como superclasse da classe UsuarioView (herdará todas as configurações e poderá ser modificada)
 from flask_admin.contrib.sqla import ModelView 
+from models.usuario import User
 
 # Adicionado para adequar a Home da aplicação
 # A classe AdminIndexView que será herdada pela classe HomeView para que a 
@@ -17,7 +18,7 @@ from config import app_config, app_active
 class HomeView(AdminIndexView):
     @expose('/')
     def index(self):
-        return self.render('admin.html', data={ 'username': 'Admin'})
+        return self.render('admin.html', data={'username': 'Admin', 'users': User.get_all()})
 
 
 # A variável config recebe a atribuição do ambiente ativo.

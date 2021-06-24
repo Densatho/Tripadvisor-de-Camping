@@ -25,8 +25,10 @@ class UsuarioController():
             else:
                 return {}
         return {}
-
+    
         def recuperar(email): 
             # Criado somente para exemplificar a recuperação de senha por email. 
             # Rota do app.py: @app.route('/recuperar-senha/', methods=['POST']) 
             return ''
+
+

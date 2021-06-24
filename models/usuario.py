@@ -29,6 +29,16 @@ class User(db.Model):
     def get_usuario_by_email(self): 
         # Método para validar se usuário existe ou não
         return ' '
+        
+    def get_all():
+        try:
+            res = db.session.query(User).all() 
+        except Exception as e:
+            res = []
+            print(e)
+        finally:
+            db.session.close() 
+            return res        
 
     def get_usuario_by_id(self): 
         # Método para listar dados do usuário perfil
