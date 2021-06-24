@@ -28,7 +28,14 @@ class User(db.Model):
      # Métodos adicionados para configuração posterior
     def get_usuario_by_email(self): 
         # Método para validar se usuário existe ou não
-        return ' '
+        try:
+            res = db.session.query(User).filter(User.email == self.email)
+        except Exception as e:
+            res = []
+            print(e)
+        finally:
+            db.session.close() 
+            return res[0]
         
     def get_all():
         try:
@@ -62,7 +69,6 @@ class User(db.Model):
 
     # Método para verificar se a senha informada é igual a que está no banco de dados
     def verify_password(self, password_no_hash, password_database): 
-        try:
-            return pbkdf2_sha256.verify(password_no_hash, password_database)
-        except ValueError:
-            return False
+        if password_no_hash == password_database:
+            return True
+        return False

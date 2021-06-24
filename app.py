@@ -37,19 +37,19 @@ def create_app(config_name):
         return render_template('search.html')
 
 
-    @app.route('/401/')
-    def erro401():
-        return render_template('401.html')
+    @app.errorhandler(401)
+    def erro401(e):
+        return render_template('401.html'), 401
 
 
-    @app.route('/404/')
-    def erro404():
-        return render_template('404.html')
+    @app.errorhandler(404)
+    def erro404(e):
+        return render_template('404.html'), 404
 
 
-    @app.route('/500/')
-    def erro500():
-        return render_template('500.html')
+    @app.errorhandler(500)
+    def erro500(e):
+        return render_template('500.html'), 500
 
 
     @app.route('/admin/')
@@ -64,7 +64,7 @@ def create_app(config_name):
 
     @app.route('/login/')
     def login():
-        return render_template('login.html')
+        return render_template('login.html', data={'status': 200, 'msg': None, 'type': None})
 
 
     @app.route('/login/', methods=['POST'])
@@ -76,8 +76,7 @@ def create_app(config_name):
         if resultado:
             return redirect('/admin')
         else:
-            data = {'status': 401, 'msg': 'Dados incorretos', 'type': None}
-            return render_template('login.html', data)
+            return render_template('login.html')
 
 
     @app.route('/password/')

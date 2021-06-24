@@ -13,12 +13,12 @@ class UsuarioController():
 
         # Verifica se o usuário existe no banco de dados e atribui a resultado.
         resultado = self.usuario_model.get_usuario_by_email()
+        print(resultado)
 
         # Caso o usuário exista o resultado não será None
         if resultado is not None: 
             # Verifica se a senha que o usuário enviou, agora convertido em hash, é igual a senha que foi pega no banco de dados para esse usuário.
             res = self.usuario_model.verify_password(password, resultado.password)
-
             # Se forem a mesma, retorna True.
             if res:
                 return resultado
