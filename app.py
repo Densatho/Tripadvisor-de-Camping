@@ -32,11 +32,6 @@ def create_app(config_name):
         return render_template('index.html')
 
 
-    @app.route('/search/')
-    def search():
-        return render_template('search.html')
-
-
     @app.errorhandler(401)
     def erro401(e):
         return render_template('401.html'), 401
@@ -55,12 +50,7 @@ def create_app(config_name):
     @app.route('/admin/')
     def admin():
         return render_template('admin.html')
-
-
-    @app.route('/admin/charts/')
-    def admin_charts():
-        return render_template('charts.html')
-
+    
 
     @app.route('/login/')
     def login():
