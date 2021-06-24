@@ -15,7 +15,7 @@ from admin.views import UsuarioView, HomeView
 
 def start_views(app, db):
     # Utilização do bootstrap4 por meio do construtor do Admin.
-    admin = Admin(app, name='Componentes Curriculares', base_template='admin/base.html', template_mode='bootstrap4', index_view=HomeView())
+    admin = Admin(app, name='Administração geral', base_template='admin/base.html', template_mode='bootstrap4', index_view=HomeView())
     
     # Método que é utilizado para criar uma view em nossa aplicação Admin.
     # ModelView: é um recurso do flask_admin que permite a criação Admin, as telas do administrador baseadas na estrutura das models.

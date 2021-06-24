@@ -33,7 +33,7 @@ class UsuarioView(ModelView):
     }
     column_labels = {
         'perfil': 'Perfil',
-        'username': 'Nome de usuário', 
+        'Username': 'Nome de usuário', 
         'email': 'E-mail',
         'date_created': 'Data de criação', 
         'last_update': 'Última atualização', 
