@@ -15,5 +15,15 @@ class Local(db.Model):
     rating_amount = db.Column(db.Integer, nullable=False)
     rating = db.Column(db.Integer, nullable=False)
     
+    def get_all():
+        try:
+            res = db.session.query(Local).all() 
+        except Exception as e:
+            res = []
+            print(e)
+        finally:
+            db.session.close() 
+            return res   
+        
     def __repr__(self) -> str:
         return f'{self.name} - {self.address}'
