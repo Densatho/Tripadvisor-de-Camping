@@ -18,7 +18,7 @@ from config import app_config, app_active
 class HomeView(AdminIndexView):
     @expose('/')
     def index(self):
-        return self.render('admin.html', data={'username': 'Admin', 'users': User.get_all()})
+        return self.render('admin.html', data={'username': 'Admin', 'users': User.get_all()})   
 
 
 # A variável config recebe a atribuição do ambiente ativo.
